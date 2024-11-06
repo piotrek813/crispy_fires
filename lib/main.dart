@@ -169,8 +169,8 @@ class HomeScreen extends ConsumerWidget {
                     Image.asset("assets/cover.png"),
                     const Text("Crispy Chips Casino",
                         textAlign: TextAlign.center,
-                        style:
-                            TextStyle(fontSize: 44, fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontSize: 44, fontWeight: FontWeight.bold)),
                     const SizedBox(
                       height: 34,
                     ),
@@ -178,8 +178,10 @@ class HomeScreen extends ConsumerWidget {
                       background: CrispyColors.blue,
                       label: "Dołącz do gry",
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const JoinTable()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const JoinTable()));
                       },
                     ),
                     const SizedBox(
@@ -189,7 +191,7 @@ class HomeScreen extends ConsumerWidget {
                       label: "Nowa gra",
                       onPressed: () {
                         ref.read(serverProvider).start();
-              
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -313,19 +315,24 @@ class LobbyScreen extends ConsumerWidget {
     final isAccepted = lobbyUsers.any((e) => e.name == name && e.isAccepted);
 
     if (!isAccepted) {
-      return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Ciekawe czy ciebie wpuszczą?",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(
-                height: 20,
-              ),
-              const CircularProgressIndicator(),
-            ],
+      return PopScope(
+        onPopInvokedWithResult: (_, __) {
+          ref.invalidate(lobbyProvider);
+        },
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Ciekawe czy ciebie wpuszczą?",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(
+                  height: 20,
+                ),
+                const CircularProgressIndicator(),
+              ],
+            ),
           ),
         ),
       );

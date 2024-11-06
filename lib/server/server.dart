@@ -112,7 +112,6 @@ class Server {
     sendGameState(ref.read(tableDataProvider));
   }
 
-
   void onCancelBet(SocketMessage message) {
     ref.read(tableDataProvider.notifier).cancelBet(message.data);
   }
